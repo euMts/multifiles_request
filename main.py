@@ -111,7 +111,7 @@ def main():
         ###
         files = getFiles(f"./{dir}")["response"]["files"]
         for x in range(len(files)):
-            responseFile = f"./{folderName}/response_{files[x].split('.')[0]}.txt"
+            responseFile = f"./{folderName}/response_{files[x].split('.')[0]}_{files[x].split('.')[1]}.txt"
             if isfile(responseFile) == True:
                 print(f"O arquivo '{responseFile}' já existe!")
                 pass
@@ -120,11 +120,11 @@ def main():
                 response = sendRequest(url, f"{dir}/{files[x]}")
                 if response["response"] != "":
                     print(f"Retorno recebido, armazenando response na pasta {folderName}")
-                    textToFile(json.dumps(response["response"]["entities"], indent=4), responseFile) # response["response"] = response inteira
+                    textToFile(json.dumps(response["response"], indent=4), responseFile) # response["response"]["entities"] = apenas entidades
                     print(f"Response armazenada como {responseFile}")   
                     print(" ")
                     success_count += 1
-                    sleep(2)
+                    sleep(1)
                 else:
                     print(f"Timeout em {files[x]}")
             print(f"\nO retorno de {success_count} arquivos foi armazenado.\n")
